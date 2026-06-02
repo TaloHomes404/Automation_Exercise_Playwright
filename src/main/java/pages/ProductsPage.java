@@ -2,7 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
+import config.ConfigManager;
 
 public class ProductsPage {
 
@@ -23,5 +23,8 @@ public class ProductsPage {
         submitSearchButton.click();
     }
 
+    public void openViewProductPage(String productId) { page.navigate(ConfigManager.BASE_URL + "product_details/" + productId); }
+
+    public void open() { page.navigate(ConfigManager.BASE_URL + "products"); }
 
 }
