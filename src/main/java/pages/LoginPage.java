@@ -41,7 +41,7 @@ public class LoginPage {
         loginButton.click();
     }
 
-    public void preRegister(String name, String email){
+    public void preRegisterAndClickSignupButton(String name, String email){
         usernameSignupField.fill(name);
         emailSignupField.fill(email);
         signupButton.click();

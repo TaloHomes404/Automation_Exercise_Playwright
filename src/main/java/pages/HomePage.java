@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import config.ConfigManager;
 
 public class HomePage {
 
@@ -19,9 +20,10 @@ public class HomePage {
         this.sleevelessDressViewProductButton = page.locator("a[href='/product_details/3']");
     }
 
+    public void open() { page.navigate(ConfigManager.BASE_URL); }
 
-    public void addProductToCart(String productId){
-        page.locator("[data-product-id'" + productId + "']").click();
+    public void addProductToCart(int productId){
+        page.locator("[data-product-id='" + productId + "']").first().click();
     }
 
     public void openProductDetails(String productId){

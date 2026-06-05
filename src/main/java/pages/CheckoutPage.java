@@ -33,4 +33,8 @@ public class CheckoutPage {
         return cartDescription.getByText(productName).count() > 0;
     }
 
+    public void clickPlaceOrder(){
+        placeOrderButton.click();
+    }
+
 }

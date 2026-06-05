@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import config.ConfigManager;
 
 public class ProductsPage {
@@ -23,8 +24,20 @@ public class ProductsPage {
         submitSearchButton.click();
     }
 
-    public void openViewProductPage(String productId) { page.navigate(ConfigManager.BASE_URL + "product_details/" + productId); }
+    public void openViewProductPage(int productId) { page.navigate(ConfigManager.BASE_URL + "product_details/" + productId); }
+
+    public void setQuantityAndAddToCart(int quantity){
+        Locator quantityBox = page.locator("input#quantity");
+        quantityBox.clear();
+        quantityBox.fill(String.valueOf(quantity));
+        page.getByText("Add to cart").click();
+    }
 
     public void open() { page.navigate(ConfigManager.BASE_URL + "products"); }
+
+    public void addProductToCart(int productId){
+        Locator productColumn = page.locator("div.productinfo").first();
+        productColumn.locator("a[data-product-id='" + productId + "']").click();
+    }
 
 }

@@ -25,7 +25,7 @@ public class ViewCartPage {
         this.page = page;
 
         this.emptyCartInfo = page.locator("span#empty_cart");
-        this.proceedToCheckoutButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed to Checkout"));
+        this.proceedToCheckoutButton = page.getByText("Proceed To Checkout");
 
         this.cartTableDescription = page.locator("td.description");
         this.cartTableQuantity = page.locator("td.quantity");
@@ -38,10 +38,32 @@ public class ViewCartPage {
     public void removeProduct(String product){
         Locator row = page.locator("tr")
                 .filter(new Locator.FilterOptions().setHasText(product));
-
         row.locator(".cart_quantity_delete").click();
     }
 
     public void proceedToCheckout() { proceedToCheckoutButton.click(); }
+
+    public int countItemsInCart(){
+      return page.locator("tr").count();
+    }
+
+    public boolean isProductInCart(int productId){
+        return page.locator("#product-" + productId).isVisible();
+    }
+
+    public int getQuantityOfProduct(int productId){
+        Locator row = page.locator("tr#product-" + productId);
+        return Integer.parseInt(row.locator("td.cart_quantity").textContent().trim());
+    }
+
+    public int getTotalCostOfProduct(int productId){
+        Locator row = page.locator("tr#product-" + productId);
+        return Integer.parseInt(row.locator(".cart_total p").textContent().replace("Rs.", "").trim());
+    }
+
+    public int getPriceOfProduct(int productId){
+        Locator row = page.locator("tr#product-" + productId);
+        return Integer.parseInt(row.locator(".cart_price p").textContent().replace("Rs.", "").trim());
+    }
 
 }
