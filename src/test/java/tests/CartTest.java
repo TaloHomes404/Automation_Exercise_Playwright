@@ -17,12 +17,6 @@ public class CartTest extends BaseTest {
     @Test
     public void shouldAddTwoProductsToCartSuccessfully(){
 
-        ViewCartPage viewCartPage = new ViewCartPage(page);
-        HomePage homePage = new HomePage(page);
-        ProductsPage productsPage = new ProductsPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
-
         final int BLUE_TOP_ID = 1;
         final int MEN_TSHIRT_ID = 2;
 
@@ -53,12 +47,6 @@ public class CartTest extends BaseTest {
 
     @Test
     public void shouldSuccessfullyAddFewPiecesOfProductInCart(){
-
-        ViewCartPage viewCartPage = new ViewCartPage(page);
-        HomePage homePage = new HomePage(page);
-        ProductsPage productsPage = new ProductsPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
 
         final int SLEEVELESS_DRESS = 3;
 

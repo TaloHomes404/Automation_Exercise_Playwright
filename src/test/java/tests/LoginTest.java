@@ -14,10 +14,6 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void shouldLoginUserSuccessfully(){
-        HomePage homePage = new HomePage(page);
-        LoginPage loginPage = new LoginPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
         Locator loggedUser = page.getByText("Logged in as");
 
         homePage.open();
@@ -29,10 +25,6 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void shouldNotLoginUserEnteringWrongCredentials(){
-        HomePage homePage = new HomePage(page);
-        LoginPage loginPage = new LoginPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
         Locator incorrectCredentialsError = page.getByText("Your email or password is incorrect!");
 
         homePage.open();

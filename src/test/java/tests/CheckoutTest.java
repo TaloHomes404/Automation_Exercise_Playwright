@@ -4,6 +4,8 @@ import base.BaseTest;
 import com.microsoft.playwright.Locator;
 import components.Topbar;
 import enums.Gender;
+import factory.UserFactory;
+import models.User;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import pages.*;
@@ -17,12 +19,6 @@ public class CheckoutTest extends BaseTest {
     @Test
     public void loggedUserShouldSuccessfullyOrderProducts(){
 
-        HomePage homePage = new HomePage(page);
-        LoginPage loginPage = new LoginPage(page);
-        ViewCartPage viewCartPage = new ViewCartPage(page);
-        CheckoutPage checkoutPage = new CheckoutPage(page);
-        PaymentPage paymentPage = new PaymentPage(page);
-        PopupUtils popupUtils = new PopupUtils(page);
         final int SLEEVELESS_DRESS = 3;
         Locator orderPlacedConfirmation = page.locator("[data-qa='order-placed']");
 
@@ -40,9 +36,6 @@ public class CheckoutTest extends BaseTest {
 
     @Test
     public void placeOrderAsGuestDisplayCorrectMessage(){
-        HomePage homePage = new HomePage(page);
-        PopupUtils popupUtils = new PopupUtils(page);
-        ViewCartPage viewCartPage = new ViewCartPage(page);
         final int SLEEVELESS_DRESS = 3;
         Locator cartModal = page.locator("div.modal-content");
 
@@ -58,28 +51,15 @@ public class CheckoutTest extends BaseTest {
 
     @Test
     public void checkoutAsNewRegisteredUserCorrectlyPlaceOrder(){
-        HomePage homePage = new HomePage(page);
-        PopupUtils popupUtils = new PopupUtils(page);
-        LoginPage loginPage = new LoginPage(page);
-        ViewCartPage viewCartPage = new ViewCartPage(page);
-        SignupPage signupPage = new SignupPage(page);
-        Topbar topbar = new Topbar(page);
         Faker faker = new Faker();
         final int SLEEVELESS_DRESS = 3;
         Locator addressBox = page.locator("#address_delivery");
-        String firstName = faker.name().firstName();
-        String lastName = faker.name().lastName();
-        String address = faker.address().fullAddress();
-        String email = faker.internet().emailAddress();
-        String password = faker.credentials().password();
+        User user = UserFactory.createRandomUser();
         Gender gender = faker.options().option(Gender.class);
         int day = faker.number().numberBetween(1,32);
         int month = faker.number().numberBetween(1,13);
         int year = faker.number().numberBetween(1990,2005);
-        String state = faker.address().state();
-        String city = faker.address().city();
-        String zipcode = faker.address().zipCode();
-        String phoneNumber = faker.phoneNumber().phoneNumber();
+
 
 
 
@@ -89,20 +69,20 @@ public class CheckoutTest extends BaseTest {
         popupUtils.clickViewCartFromModal();
         viewCartPage.proceedToCheckout();
         popupUtils.clickRegisterOrLoginAccountFromModal();
-        loginPage.preRegisterAndClickSignupButton(firstName, email);
+        loginPage.preRegisterAndClickSignupButton(user.getFirstName(), user.getEmail());
         signupPage.selectGender(gender);
-        signupPage.enterPassword(password);
+        signupPage.enterPassword(user.getPassword());
         signupPage.enterDateOfBirth(day,month,year);
-        signupPage.enterAddressInformations(firstName, lastName, address);
+        signupPage.enterAddressInformations(user.getFirstName(), user.getLastName(), user.getAddress());
         signupPage.selectCountry("United States");
-        signupPage.enterAddressDetails(state, city, zipcode);
-        signupPage.enterPhoneNumber(phoneNumber);
+        signupPage.enterAddressDetails(user.getState(), user.getCity(), user.getZipcode());
+        signupPage.enterPhoneNumber(user.getPhoneNumber());
         signupPage.clickCreateAccount();
         topbar.clickCart();
         viewCartPage.proceedToCheckout();
         assertTrue(viewCartPage.isProductInCart(SLEEVELESS_DRESS));
-        assertThat(addressBox).containsText(firstName + " " + lastName );
-        assertThat(addressBox).containsText(address);
+        assertThat(addressBox).containsText(user.getFirstName() + " " + user.getLastName() );
+        assertThat(addressBox).containsText(user.getAddress());
     }
 
 

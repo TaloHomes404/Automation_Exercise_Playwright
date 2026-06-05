@@ -16,10 +16,6 @@ public class SearchTest extends BaseTest {
 
     @Test
     public void shouldSuccessfullySearchForExistingProduct(){
-        HomePage homePage = new HomePage(page);
-        ProductsPage productsPage = new ProductsPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
         Locator searchedItem = page.locator(".productinfo p").filter(new Locator.FilterOptions().setHasText("Rose Pink Embroidered Maxi Dress"));
 
         homePage.open();
@@ -31,10 +27,6 @@ public class SearchTest extends BaseTest {
 
     @Test
     public void shouldFailSearchingForNonexistingProduct(){
-        HomePage homePage = new HomePage(page);
-        ProductsPage productsPage = new ProductsPage(page);
-        Topbar topbar = new Topbar(page);
-        PopupUtils popupUtils = new PopupUtils(page);
         Locator searchedItem = page.locator(".productinfo p");
 
         homePage.open();
