@@ -3,36 +3,35 @@ package tests;
 import base.BaseTest;
 import com.microsoft.playwright.Locator;
 import components.Topbar;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 import pages.LoginPage;
+import testdata.UserData;
 import utils.PopupUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class LoginTest extends BaseTest {
 
+    @BeforeEach
+    void navigateToLoginAndRegisterPage() {
+        homePage.open();
+        popupUtils.acceptCookiesIfPopupIsVisible();
+        topbar.clickLogin();
+    }
+
     @Test
     public void shouldLoginUserSuccessfully(){
-        Locator loggedUser = page.getByText("Logged in as");
+        loginPage.login(UserData.VALID_EMAIL, UserData.VALID_PASSWORD);
 
-        homePage.open();
-        popupUtils.acceptCookiesIfPopupIsVisible();
-        topbar.clickLogin();
-        loginPage.login("robertsmith11@email.com", "robertsmithpass123");
-        assertThat(loggedUser).containsText("Robert Smith");
+        assertThat(topbar.loggedUserLabel()).containsText(UserData.FULL_NAME);
     }
 
     @Test
-    public void shouldNotLoginUserEnteringWrongCredentials(){
-        Locator incorrectCredentialsError = page.getByText("Your email or password is incorrect!");
+    public void shouldDisplayErrorMessageWhenUserEntersInvalidCredentials(){
+        loginPage.login(UserData.INVALID_EMAIL, UserData.INVALID_PASSWORD);
 
-        homePage.open();
-        popupUtils.acceptCookiesIfPopupIsVisible();
-        topbar.clickLogin();
-        loginPage.login("testingwrong192@email.com", "wrongpass15z5z2z");
-        assertThat(incorrectCredentialsError).isVisible();
+        assertThat(loginPage.incorrectCredentialsError()).isVisible();
     }
-
-
 }

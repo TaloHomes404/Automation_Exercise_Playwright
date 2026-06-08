@@ -2,6 +2,7 @@ package tests;
 
 import base.BaseTest;
 import components.Topbar;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 import pages.ProductsPage;
@@ -14,15 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartTest extends BaseTest {
 
-    @Test
-    public void shouldAddTwoProductsToCartSuccessfully(){
-
-        final int BLUE_TOP_ID = 1;
-        final int MEN_TSHIRT_ID = 2;
-
+    @BeforeEach
+    void navigateToProductsPage() {
         homePage.open();
         popupUtils.acceptCookiesIfPopupIsVisible();
         topbar.clickProducts();
+    }
+
+    @Test
+    public void shouldAddTwoProductsToCartSuccessfully(){
+        final int BLUE_TOP_ID = 1;
+        final int MEN_TSHIRT_ID = 2;
         popupUtils.closeAdPopup();
         productsPage.addProductToCart(BLUE_TOP_ID);
         popupUtils.clickContinueShoppingFromModal();
@@ -47,12 +50,7 @@ public class CartTest extends BaseTest {
 
     @Test
     public void shouldSuccessfullyAddFewPiecesOfProductInCart(){
-
         final int SLEEVELESS_DRESS = 3;
-
-        homePage.open();
-        popupUtils.acceptCookiesIfPopupIsVisible();
-        topbar.clickProducts();
         productsPage.openViewProductPage(SLEEVELESS_DRESS);
         productsPage.setQuantityAndAddToCart(4);
         popupUtils.clickViewCartFromModal();

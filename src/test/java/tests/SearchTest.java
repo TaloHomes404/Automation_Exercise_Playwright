@@ -5,6 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import components.Topbar;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pages.HomePage;
 import pages.ProductsPage;
@@ -14,27 +15,25 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class SearchTest extends BaseTest {
 
-    @Test
-    public void shouldSuccessfullySearchForExistingProduct(){
-        Locator searchedItem = page.locator(".productinfo p").filter(new Locator.FilterOptions().setHasText("Rose Pink Embroidered Maxi Dress"));
-
+    @BeforeEach
+    void navigateToProductsPage() {
         homePage.open();
         popupUtils.acceptCookiesIfPopupIsVisible();
         topbar.clickProducts();
-        productsPage.searchForProduct("Rose");
-        assertThat(searchedItem).isVisible();
     }
 
     @Test
-    public void shouldFailSearchingForNonexistingProduct(){
-        Locator searchedItem = page.locator(".productinfo p");
+    public void shouldSuccessfullySearchForExistingProduct() {
+        productsPage.searchForProduct("Rose");
 
-        homePage.open();
-        popupUtils.acceptCookiesIfPopupIsVisible();
-        topbar.clickProducts();
+        assertThat(productsPage.getProduct("Rose Pink Embroidered Maxi Dress")).isVisible();
+    }
+
+    @Test
+    public void shouldDisplayEmptyResultsSearchingForNonExistingProduct() {
         productsPage.searchForProduct("Klapa gaźnika matiz 0.8 e");
-        assertThat(searchedItem).hasCount(0);
 
+        assertThat(productsPage.searchedItems()).hasCount(0);
     }
 
 }
