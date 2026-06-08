@@ -24,6 +24,16 @@ public class ProductsPage {
         submitSearchButton.click();
     }
 
+    public Locator searchedItems(){
+        return page.locator(".productinfo p");
+    }
+
+    public Locator getProduct(String productName){
+        return page.locator(".productinfo p")
+                .filter(new Locator.FilterOptions().setHasText(productName));
+    }
+
+
     public void openViewProductPage(int productId) { page.navigate(ConfigManager.BASE_URL + "product_details/" + productId); }
 
     public void setQuantityAndAddToCart(int quantity){

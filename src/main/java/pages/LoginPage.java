@@ -46,4 +46,8 @@ public class LoginPage {
         emailSignupField.fill(email);
         signupButton.click();
     }
+
+    public Locator incorrectCredentialsError(){
+        return page.getByText("Your email or password is incorrect!");
+    }
 }

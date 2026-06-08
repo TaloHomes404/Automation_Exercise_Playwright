@@ -30,5 +30,6 @@ public class Topbar {
     public void clickCart(){ cartTopbarItem.click(); }
     public void clickLogin(){ loginTopbarItem.click(); }
 
+    public Locator loggedUserLabel() { return page.getByText("Logged in as"); }
 
 }

@@ -9,6 +9,7 @@ public class CheckoutPage {
     private final Page page;
 
     //== Locators ==//
+    private final Locator deliveryAddressBox;
     private final Locator placeOrderButton;
     private final Locator orderCommentField;
 
@@ -21,6 +22,7 @@ public class CheckoutPage {
     public CheckoutPage(Page page) {
         this.page = page;
 
+        this.deliveryAddressBox = page.locator("#address_delivery");
         this.placeOrderButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Place Order"));
         this.orderCommentField = page.locator("textarea[name='message']");
 
@@ -29,11 +31,15 @@ public class CheckoutPage {
         this.cartDescription = page.locator("td.cart_description");
     }
 
-    public boolean containsProduct(String productName){
+    public boolean containsProduct(String productName) {
         return cartDescription.getByText(productName).count() > 0;
     }
 
-    public void clickPlaceOrder(){
+    public Locator getDeliveryAddress() {
+        return deliveryAddressBox;
+    }
+
+    public void clickPlaceOrder() {
         placeOrderButton.click();
     }
 

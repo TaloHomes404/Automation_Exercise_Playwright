@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import enums.Gender;
+import models.User;
 
 public class SignupPage {
 
@@ -39,6 +40,7 @@ public class SignupPage {
     private final Locator zipcodeField;
     private final Locator phoneNumberField;
 
+    private final Locator accountCreatedText;
     private final Locator emailExistsError;
     private final Locator createAccountButton;
 
@@ -73,6 +75,7 @@ public class SignupPage {
         this.zipcodeField = page.locator("[data-qa='zipcode']");
         this.phoneNumberField = page.locator("[data-qa='mobile_number']");
 
+        this.accountCreatedText = page.locator("[data-qa='account-created']");
         this.emailExistsError = page.getByText("Email Address already exist!");
         this.createAccountButton = page.locator("[data-qa='create-account']");
     }
@@ -118,12 +121,51 @@ public class SignupPage {
         zipcodeField.fill(zipcode);
     }
 
+
+
     public void enterPhoneNumber(String phoneNumber){
         phoneNumberField.fill(phoneNumber);
     }
 
     public void clickCreateAccount(){
         createAccountButton.click();
+    }
+
+    public Locator getAccountCreatedText(){
+        return accountCreatedText;
+    }
+
+    public void completeUserRegistration(User user){
+
+        selectGender(user.getGender());
+
+        enterPassword(user.getPassword());
+
+        enterDateOfBirth(
+                user.getBirthDay(),
+                user.getBirthMonth(),
+                user.getBirthYear());
+
+        signupForNewsletter();
+
+        signupForSpecialOffers();
+
+        enterAddressInformations(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getAddress());
+
+        selectCountry(user.getCountry());
+
+        enterAddressDetails(
+                user.getState(),
+                user.getCity(),
+                user.getZipcode());
+
+        enterPhoneNumber(user.getPhoneNumber());
+
+        clickCreateAccount();
+
     }
 
 }
