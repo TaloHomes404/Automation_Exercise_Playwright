@@ -46,10 +46,14 @@ public class PopupUtils {
     }
 
     public void closeAdPopup() {
-        Locator ads = page.locator("iframe[title='Advertisement']");
+        Locator iframe = page.locator("iframe[title='Advertisement']").first();
 
-        if (ads.count() > 0) {
-            ads.first().contentFrame().locator(".close-button").click();
+        if (iframe.count() > 0) {
+            try {
+                iframe.contentFrame().locator(".close-button").click(new Locator.ClickOptions().setTimeout(3000));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package factory;
 
+import enums.Gender;
 import models.User;
 import net.datafaker.Faker;
 
@@ -18,7 +19,12 @@ public class UserFactory {
                 faker.credentials().password(),
                 faker.address().state(),
                 faker.address().zipCode(),
-                faker.phoneNumber().cellPhone()
+                faker.phoneNumber().cellPhone(),
+                faker.options().option(Gender.class),
+                faker.number().numberBetween(1, 32),
+                faker.number().numberBetween(1, 13),
+                faker.number().numberBetween(1990, 2005),
+                "United States"
         );
     }
 }

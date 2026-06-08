@@ -1,5 +1,7 @@
 package models;
 
+import enums.Gender;
+
 public class User {
 
     private String firstName;
@@ -12,16 +14,29 @@ public class User {
     private String zipcode;
     private String phoneNumber;
 
-    public User(String phoneNumber, String zipcode, String state, String city, String address, String password, String email, String lastName, String firstName) {
-        this.phoneNumber = phoneNumber;
-        this.zipcode = zipcode;
-        this.state = state;
-        this.city = city;
-        this.address = address;
-        this.password = password;
-        this.email = email;
-        this.lastName = lastName;
+    private Gender gender;
+
+    private int birthDay;
+    private int birthMonth;
+    private int birthYear;
+
+    private String Country;
+
+    public User(String firstName, String lastName, String email, String password, String address, String city, String state, String zipcode, String phoneNumber, Gender gender, int birthDay, int birthMonth, int birthYear, String country) {
         this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.birthDay = birthDay;
+        this.birthMonth = birthMonth;
+        this.birthYear = birthYear;
+        Country = country;
     }
 
     public String getFirstName() {
@@ -62,5 +77,25 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public int getBirthDay() {
+        return birthDay;
+    }
+
+    public int getBirthMonth() {
+        return birthMonth;
+    }
+
+    public int getBirthYear() {
+        return birthYear;
+    }
+
+    public String getCountry() {
+        return Country;
     }
 }
