@@ -4,6 +4,8 @@ import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
+import io.qameta.allure.Step;
 
 public class PopupUtils {
 
@@ -45,29 +47,20 @@ public class PopupUtils {
         if(cookiesPopup.isVisible()) { acceptCookiesButton.click(); }
     }
 
-    public void closeAdPopup() {
-        Locator iframe = page.locator("iframe[title='Advertisement']").first();
-
-        if (iframe.count() > 0) {
-            try {
-                iframe.contentFrame().locator(".close-button").click(new Locator.ClickOptions().setTimeout(3000));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
     // PRODUCT PAGE MODAL HANDLER
+    @Step("Click \"Continue Shopping\" from modal")
     public void clickContinueShoppingFromModal(){
         if(cartModal.isVisible()) continueShoppingButton.click();
     }
 
+    @Step("Click \"View Cart\" from modal")
     public void clickViewCartFromModal(){
         if(cartModal.isVisible()) viewCartModalLink.click();
     }
 
     // LOGIN / REGISTER MODAL HANDLER
 
+    @Step("Click \"Register / Login\" from modal")
     public void clickRegisterOrLoginAccountFromModal() { if(cartModal.isVisible()) registerOrLoginAccountLink.click();  }
 
     public void clickContinueOnCartFromModal() { if(cartModal.isVisible()) continueOnCartButton.click();  }

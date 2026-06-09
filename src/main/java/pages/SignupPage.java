@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import enums.Gender;
+import io.qameta.allure.Step;
 import models.User;
 
 public class SignupPage {
@@ -84,7 +85,7 @@ public class SignupPage {
         newsletterSignupCheckbox.check();
     }
 
-    public void signupForSpecialOffers(){
+    public void signupForSpecialOffers() {
         specialOfferCheckbox.check();
     }
 
@@ -95,77 +96,66 @@ public class SignupPage {
         }
     }
 
-    public void enterPassword(String password){
+    public void enterPassword(String password) {
         passwordField.fill(password);
     }
 
-    public void enterDateOfBirth(int days, int months, int years){
+    public void enterDateOfBirth(int days, int months, int years) {
         dateOfBirthDaysCheckbox.selectOption(String.valueOf(days));
         dateOfBirthMonthsCheckbox.selectOption(String.valueOf(months));
         dateOfBirthYearsCheckbox.selectOption(String.valueOf(years));
     }
 
-    public void enterAddressInformations(String firstName, String lastName, String address){
+    public void enterAddressInformations(String firstName, String lastName, String address) {
         firstNameField.fill(firstName);
         lastNameField.fill(lastName);
         addressField.fill(address);
     }
 
-    public void selectCountry(String country){
+    public void selectCountry(String country) {
         countrySelectbox.selectOption(country);
     }
 
-    public void enterAddressDetails(String state, String city, String zipcode){
+    public void enterAddressDetails(String state, String city, String zipcode) {
         stateField.fill(state);
         cityField.fill(city);
         zipcodeField.fill(zipcode);
     }
 
 
-
-    public void enterPhoneNumber(String phoneNumber){
+    public void enterPhoneNumber(String phoneNumber) {
         phoneNumberField.fill(phoneNumber);
     }
 
-    public void clickCreateAccount(){
+    public void clickCreateAccount() {
         createAccountButton.click();
     }
 
-    public Locator getAccountCreatedText(){
+    public Locator getAccountCreatedText() {
         return accountCreatedText;
     }
 
-    public void completeUserRegistration(User user){
-
+    @Step("Complete registration process by filling credentials fields")
+    public void completeUserRegistration(User user) {
         selectGender(user.getGender());
-
         enterPassword(user.getPassword());
-
         enterDateOfBirth(
                 user.getBirthDay(),
                 user.getBirthMonth(),
                 user.getBirthYear());
-
         signupForNewsletter();
-
         signupForSpecialOffers();
-
         enterAddressInformations(
                 user.getFirstName(),
                 user.getLastName(),
                 user.getAddress());
-
         selectCountry(user.getCountry());
-
         enterAddressDetails(
                 user.getState(),
                 user.getCity(),
                 user.getZipcode());
-
         enterPhoneNumber(user.getPhoneNumber());
-
         clickCreateAccount();
-
     }
 
 }

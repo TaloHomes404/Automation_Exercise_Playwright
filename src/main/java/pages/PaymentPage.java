@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 public class PaymentPage {
 
@@ -31,6 +32,7 @@ public class PaymentPage {
         this.confirmOrderButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Pay and Confirm Order"));
     }
 
+    @Step("Enter payment details (Card)")
     public void enterCardDetails(String name, String number, String cvc, String expirationMonth, String expirationYear){
         nameOnCard.fill(name);
         cardNumber.fill(number);
@@ -39,6 +41,7 @@ public class PaymentPage {
         expirationRateYear.fill(expirationYear);
     }
 
+    @Step("Confirm order")
     public void confirmOrder(){ confirmOrderButton.click(); }
 
 }

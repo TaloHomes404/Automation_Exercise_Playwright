@@ -3,6 +3,7 @@ package components;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 public class Topbar {
 
@@ -26,8 +27,14 @@ public class Topbar {
 
 
     public void clickHome(){ homeTopbarItem.click(); }
+
+    @Step("Click product item from topbar")
     public void clickProducts(){ productsTopbarItem.click(); }
+
+    @Step("Click cart item from topbar")
     public void clickCart(){ cartTopbarItem.click(); }
+
+    @Step("Click Login/Signup item from topbar")
     public void clickLogin(){ loginTopbarItem.click(); }
 
     public Locator loggedUserLabel() { return page.getByText("Logged in as"); }

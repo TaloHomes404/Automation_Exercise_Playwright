@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import config.ConfigManager;
+import io.qameta.allure.Step;
 
 public class LoginPage {
     private final Page page;
@@ -33,14 +34,17 @@ public class LoginPage {
         this.signupButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Signup"));
     }
 
+    @Step("Open login page")
     public void open() { page.navigate(ConfigManager.BASE_URL + "login"); }
 
+    @Step("Enter e-mail ({email}) and password ({password}) and login user")
     public void login(String email, String password){
         loginEmailField.fill(email);
         loginPasswordField.fill(password);
         loginButton.click();
     }
 
+    @Step("Enter name ({name}) and e-mail ({email}) in pre-register fields and signup")
     public void preRegisterAndClickSignupButton(String name, String email){
         usernameSignupField.fill(name);
         emailSignupField.fill(email);

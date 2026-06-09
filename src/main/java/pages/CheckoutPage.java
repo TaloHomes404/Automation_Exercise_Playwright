@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 public class CheckoutPage {
 
@@ -12,6 +13,7 @@ public class CheckoutPage {
     private final Locator deliveryAddressBox;
     private final Locator placeOrderButton;
     private final Locator orderCommentField;
+    private final Locator orderPlacedConfirmationText;
 
     //Checkout / Price values
     private final Locator totalAmountValue;
@@ -29,6 +31,7 @@ public class CheckoutPage {
         this.totalAmountValue = page.locator("p.cart_total_price");
 
         this.cartDescription = page.locator("td.cart_description");
+        this.orderPlacedConfirmationText = page.locator("[data-qa='order-placed']");
     }
 
     public boolean containsProduct(String productName) {
@@ -39,6 +42,9 @@ public class CheckoutPage {
         return deliveryAddressBox;
     }
 
+    public Locator getOrderConfirmationText(){ return orderPlacedConfirmationText; }
+
+    @Step("Place order from checkout page")
     public void clickPlaceOrder() {
         placeOrderButton.click();
     }

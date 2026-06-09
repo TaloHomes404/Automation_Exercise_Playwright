@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 public class ViewCartPage {
 
@@ -25,7 +26,7 @@ public class ViewCartPage {
         this.page = page;
 
         this.emptyCartInfo = page.locator("span#empty_cart");
-        this.proceedToCheckoutButton = page.getByText("Proceed To Checkout");
+        this.proceedToCheckoutButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Proceed To Checkout"));
 
         this.cartTableDescription = page.locator("td.description");
         this.cartTableQuantity = page.locator("td.quantity");
@@ -41,10 +42,12 @@ public class ViewCartPage {
         row.locator(".cart_quantity_delete").click();
     }
 
+    @Step("Proceed to checkout from cart")
     public void proceedToCheckout() { proceedToCheckoutButton.click(); }
 
     public int countItemsInCart(){
-      return page.locator("tr").count();
+        Locator productsTableItems = page.locator("#cart_info tbody");
+        return productsTableItems.locator("tr").count();
     }
 
     public boolean isProductInCart(int productId){

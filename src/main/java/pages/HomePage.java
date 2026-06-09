@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import config.ConfigManager;
+import io.qameta.allure.Step;
 
 public class HomePage {
 
@@ -20,8 +21,10 @@ public class HomePage {
         this.sleevelessDressViewProductButton = page.locator("a[href='/product_details/3']");
     }
 
+    @Step("Open home page")
     public void open() { page.navigate(ConfigManager.BASE_URL); }
 
+    @Step("Add product with id {productId} to cart from home page")
     public void addProductToCart(int productId){
         page.locator("[data-product-id='" + productId + "']").first().click();
     }
