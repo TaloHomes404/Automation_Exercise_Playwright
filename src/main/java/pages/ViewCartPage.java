@@ -26,7 +26,7 @@ public class ViewCartPage {
         this.page = page;
 
         this.emptyCartInfo = page.locator("span#empty_cart");
-        this.proceedToCheckoutButton = page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Proceed To Checkout"));
+        this.proceedToCheckoutButton = page.locator("a.check_out");
 
         this.cartTableDescription = page.locator("td.description");
         this.cartTableQuantity = page.locator("td.quantity");
