@@ -5,9 +5,14 @@ import components.Topbar;
 import factory.PlaywrightFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import pages.*;
 import utils.PopupUtils;
+import utils.ScreenshotExtension;
+import utils.TestResultWatcher;
 
+@ExtendWith(TestResultWatcher.class)
 public class BaseTest {
 
     // == PAGE == //
@@ -28,6 +33,19 @@ public class BaseTest {
     void setup(){
         page = PlaywrightFactory.initBrowser();
 
+        page.route("**/*", route -> {
+            String url = route.request().url();
+
+            if (url.contains("googlesyndication")
+                    || url.contains("doubleclick")
+                    || url.contains("googleads")) {
+
+                route.abort();
+            } else {
+                route.resume();
+            }
+        });
+
         homePage = new HomePage(page);
         loginPage = new LoginPage(page);
         signupPage = new SignupPage(page);
@@ -44,5 +62,7 @@ public class BaseTest {
         PlaywrightFactory.closeBrowser();
     }
 
-
+    public Page getPage() {
+        return page;
+    }
 }
